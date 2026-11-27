@@ -8,13 +8,13 @@ AstrBot Mobile Manager 是一个独立的非官方社区客户端，用于在 An
 
 ## 界面示例
 
-### 竖屏统计页
+### iOS · 竖屏统计页
 
-<img src="docs/screenshots/astrbot-webui-stats-mobile.jpg" alt="AstrBot Mobile Manager 内的 AstrBot WebUI 深色统计页" width="340">
+<img src="docs/screenshots/astrbot-webui-stats-mobile.jpg" alt="iOS 上的 AstrBot WebUI 深色统计页" width="340">
 
-### 横屏首次提示
+### Android · 横屏首次提示
 
-![AstrBot Mobile Manager 内打开的 AstrBot WebUI 首次提示](docs/screenshots/astrbot-webui-first-notice.png)
+![Android 上横屏打开的 AstrBot WebUI 首次提示](docs/screenshots/astrbot-webui-first-notice.png)
 
 ## 服务器要求
 
@@ -70,7 +70,7 @@ python3 tool/package_ipa.py build/ios/iphoneos/Runner.app build/astrbot-mobile-u
 
 ### 验证状态
 
-Windows 上的 `flutter analyze` 和启用 SSH 测试服务后的 10 项本地测试均已通过。Android 模拟器通过了安全存储与测试页面会话保留两项验证，ARM64 Release APK 已验签。macOS 已成功构建 iOS Release，未签名 IPA 已校验为适用于 iOS 15 及以上的 ARM64 真机包。竖屏示例展示了实际 AstrBot 实例的统计页。登录步骤、TOTP 和文件导入导出仍待逐项验证。
+Windows 上的 `flutter analyze` 和启用 SSH 测试服务后的 10 项本地测试均已通过。Android 模拟器通过了安全存储与测试页面会话保留两项验证，ARM64 Release APK 已验签。macOS 已成功构建 iOS Release，未签名 IPA 已校验为适用于 iOS 15 及以上的 ARM64 真机包。iOS 截图展示了实际 AstrBot 实例的统计页。登录步骤、TOTP 和文件导入导出仍待逐项验证。
 
 默认 `flutter test` 跳过 SSH 集成测试。如需运行，先安装 Paramiko 5.1.0，并将环境变量 `ASTRBOT_SSH_TEST` 设为 `1`。连接设备或模拟器后，可用 `flutter test integration_test/webui_test.dart -d <设备 ID>` 运行移动端集成测试。
 

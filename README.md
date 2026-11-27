@@ -8,13 +8,13 @@ The phone connects over the SSH service you already have. Keep the WebUI port pr
 
 ## Screenshots
 
-### Portrait statistics
+### iOS · Portrait statistics
 
-<img src="docs/screenshots/astrbot-webui-stats-mobile.jpg" alt="AstrBot WebUI statistics in dark mode inside AstrBot Mobile Manager" width="340">
+<img src="docs/screenshots/astrbot-webui-stats-mobile.jpg" alt="AstrBot WebUI statistics in dark mode on iOS" width="340">
 
-### First-run notice in landscape
+### Android · Landscape first-run notice
 
-![AstrBot WebUI in AstrBot Mobile Manager with the first-run notice open](docs/screenshots/astrbot-webui-first-notice.png)
+![AstrBot WebUI on Android with the first-run notice open](docs/screenshots/astrbot-webui-first-notice.png)
 
 ## Server requirements
 
@@ -70,7 +70,7 @@ python3 tool/package_ipa.py build/ios/iphoneos/Runner.app build/astrbot-mobile-u
 
 ### Verification
 
-On Windows, `flutter analyze` and all 10 host tests passed with the SSH fixture enabled. Two Android emulator tests passed for secure storage and WebView session retention with a fixture page. The ARM64 Release APK passed signature verification. The iOS Release build succeeded on macOS. The unsigned IPA was verified as an iPhone ARM64 build for iOS 15 or later. The portrait screenshot shows the statistics page from a deployed AstrBot instance. The sign-in flow, TOTP, and file import and export still need individual device checks.
+On Windows, `flutter analyze` and all 10 host tests passed with the SSH fixture enabled. Two Android emulator tests passed for secure storage and WebView session retention with a fixture page. The ARM64 Release APK passed signature verification. The iOS Release build succeeded on macOS. The unsigned IPA was verified as an iPhone ARM64 build for iOS 15 or later. The iOS screenshot shows the statistics page from a deployed AstrBot instance. The sign-in flow, TOTP, and file import and export still need individual device checks.
 
 `flutter test` skips the SSH fixture by default. To include it, install Paramiko 5.1.0 and set `ASTRBOT_SSH_TEST=1` before running the tests. On a connected mobile device or emulator, run `flutter test integration_test/webui_test.dart -d <device-id>`.
 
