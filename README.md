@@ -6,7 +6,13 @@ AstrBot Mobile Manager is an independent, unofficial Android and iOS client for 
 
 The phone connects over the SSH service you already have. Keep the WebUI port private. The app requires no domain, HTTPS reverse proxy, VPN, or additional server process.
 
-## Screenshot
+## Screenshots
+
+### Portrait statistics
+
+<img src="docs/screenshots/astrbot-webui-stats-mobile.jpg" alt="AstrBot WebUI statistics in dark mode inside AstrBot Mobile Manager" width="340">
+
+### First-run notice in landscape
 
 ![AstrBot WebUI in AstrBot Mobile Manager with the first-run notice open](docs/screenshots/astrbot-webui-first-notice.png)
 
@@ -64,7 +70,7 @@ python3 tool/package_ipa.py build/ios/iphoneos/Runner.app build/astrbot-mobile-u
 
 ### Verification
 
-On Windows, `flutter analyze` and all 10 host tests passed with the SSH fixture enabled. Two Android emulator tests passed for secure storage and WebView session retention with a fixture page. The ARM64 Release APK passed signature verification. Sign-in, TOTP and file import/export against a real AstrBot instance are pending device verification. The iOS workflow and IPA packaging script are configured. macOS compilation and installation on an iPhone are pending.
+On Windows, `flutter analyze` and all 10 host tests passed with the SSH fixture enabled. Two Android emulator tests passed for secure storage and WebView session retention with a fixture page. The ARM64 Release APK passed signature verification. The iOS Release build succeeded on macOS. The unsigned IPA was verified as an iPhone ARM64 build for iOS 15 or later. The portrait screenshot shows the statistics page from a deployed AstrBot instance. The sign-in flow, TOTP, and file import and export still need individual device checks.
 
 `flutter test` skips the SSH fixture by default. To include it, install Paramiko 5.1.0 and set `ASTRBOT_SSH_TEST=1` before running the tests. On a connected mobile device or emulator, run `flutter test integration_test/webui_test.dart -d <device-id>`.
 
