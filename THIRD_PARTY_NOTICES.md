@@ -6,7 +6,11 @@ AstrBot Mobile Manager is licensed under [AGPL-3.0-or-later](LICENSE). The app o
 
 Android and iOS project scaffolding originates from the Flutter 3.50.1 application template. Copyright 2014 The Flutter Authors. The Flutter SDK and template are provided under the [BSD 3-Clause license](https://github.com/flutter/flutter/blob/ae9b586f34a8443573f82ef57c3bf914a908cbf7/LICENSE).
 
-The local test build's launcher artwork comes from AstrBotDevs' [AstrBot Desktop application icon](https://github.com/AstrBotDevs/AstrBot-desktop/blob/32b0e693ca865276f8162bab9fdf7ecb08d11fa9/src-tauri/icons/icon.png). The platform resources use resized versions of the upstream artwork. See the [upstream license](https://github.com/AstrBotDevs/AstrBot-desktop/blob/32b0e693ca865276f8162bab9fdf7ecb08d11fa9/LICENSE). AstrBot Mobile Manager identifies itself as an independent community client.
+## Launcher artwork
+
+The Android and iOS launcher assets are resized copies of AstrBotDevs' [AstrBot Desktop application icon](https://github.com/AstrBotDevs/AstrBot-desktop/blob/32b0e693ca865276f8162bab9fdf7ecb08d11fa9/src-tauri/icons/icon.png). These are the default resources for both local and CI builds. See the [upstream license](https://github.com/AstrBotDevs/AstrBot-desktop/blob/32b0e693ca865276f8162bab9fdf7ecb08d11fa9/LICENSE). AstrBot Mobile Manager identifies itself as an independent community client.
+
+Before distributing a build publicly with this artwork, confirm the permitted use with AstrBotDevs, or replace it with independently created artwork. Include this notice with distributed builds.
 
 ## App dependencies
 
@@ -25,7 +29,6 @@ The exact versions and hashes of the Dart packages are recorded in [pubspec.lock
 The locked Dart package licenses were reviewed. The additional license families found include BSD-2-Clause (e.g. asn1lib), MIT (e.g. pinenacl and Pointy Castle), and Apache-2.0 (e.g. material_color_utilities and portions of file_selector_android). These permissive terms are compatible with the project's AGPL v3 distribution when their notice conditions are preserved. Flutter engine and font components carry separate notices bundled by the Flutter tooling.
 
 macOS/Xcode, WebKit, the Android SDK and system WebView come from their respective platform vendors. The build uses the Gradle toolchain and AndroidX libraries under their published terms. Paramiko and its dependencies run in a test-only Python subprocess and are absent from the app binaries. See [Paramiko's license](https://github.com/paramiko/paramiko/blob/main/LICENSE).
-
 
 ## Flutter template license text
 

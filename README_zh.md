@@ -34,10 +34,10 @@ WebView → 127.0.0.1:<手机本地端口> → SSH 本地端口转发 → AstrBo
 
 ## 安装
 
-在你的 GitHub 仓库中打开 **Actions**，选择 **Android test APK** 或 **iOS unsigned IPA**，在包含工作流的分支点击 **Run workflow**。构建成功后从该次运行的 **Artifacts** 下载。
+- **Android 7.0 及以上（API 24）** — ARM64 手机本地测试可安装 `astrbot-mobile-manager-0.1.0-arm64.apk`（约 19 MiB）。**Android test APK** 工作流目前生成体积较大的通用调试包 `app-debug.apk`。两种包都使用调试签名，覆盖安装需要签名一致且版本号符合 Android 的更新规则。
+- **iOS 15 及以上** — **iOS unsigned IPA** 工作流配置用于生成 `astrbot-mobile-unsigned.ipa`，可用 SideStore 或 Sideloadly 等工具签名。也可以打开 Xcode 工程配置签名后为设备构建。更改签名团队或 Bundle ID 可能影响已有 Keychain 数据的读取。
 
-- **Android 7.0 及以上（API 24）** — 解压并安装 `app-debug.apk`。测试包使用调试密钥，只有签名一致才能覆盖安装。不同 GitHub Runner 生成的调试签名可能不同。
-- **iOS 15 及以上** — 解压 `astrbot-mobile-unsigned.ipa`。用 SideStore、Sideloadly 或 Xcode 的签名流程完成签名后安装。使用支持个人 Apple ID 的自签工具可进行真机测试。签名团队或 Bundle ID 改变后，之前的 Keychain 数据可能无法读取。
+通过 GitHub 构建时，先确认工作流文件已进入仓库默认分支。打开 **Actions** 并选择对应工作流，在 **Run workflow** 中选定分支，运行完成后从 **Artifacts** 下载产物。
 
 ## 开发与构建
 
@@ -47,10 +47,10 @@ WebView → 127.0.0.1:<手机本地端口> → SSH 本地端口转发 → AstrBo
 flutter pub get --enforce-lockfile
 flutter analyze
 flutter test
-flutter build apk --debug
+flutter build apk --release --split-per-abi
 ```
 
-在 macOS 上执行以下命令。Flutter 在构建过程中使用 Swift Package Manager 解析 iOS 插件依赖。
+Android APK 输出在 `build/app/outputs/flutter-apk/`。ARM64 手机使用 `app-arm64-v8a-release.apk`。iOS 构建在 macOS 上执行，Flutter 通过 Swift Package Manager 解析插件依赖。
 
 ```sh
 flutter precache --ios
@@ -58,7 +58,11 @@ flutter build ios --release --no-codesign
 python3 tool/package_ipa.py build/ios/iphoneos/Runner.app build/astrbot-mobile-unsigned.ipa
 ```
 
-SSH 集成测试、移动端测试和真机验收项见 [贡献指南](CONTRIBUTING.md)。
+### 验证状态
+
+Windows 上的 `flutter analyze` 和启用 SSH 测试服务后的 10 项本地测试均已通过。Android 模拟器通过了安全存储与测试页面会话保留两项验证，ARM64 Release APK 已验签。真实 AstrBot 实例上的登录、TOTP 和文件导入导出仍待真机验证。iOS 工作流与 IPA 打包脚本已配置，macOS 编译和 iPhone 安装待验证。
+
+默认 `flutter test` 跳过 SSH 集成测试。如需运行，先安装 Paramiko 5.1.0，并将环境变量 `ASTRBOT_SSH_TEST` 设为 `1`。连接设备或模拟器后，可用 `flutter test integration_test/webui_test.dart -d <设备 ID>` 运行移动端集成测试。
 
 ## 初版范围与上游
 
@@ -66,4 +70,6 @@ SSH 集成测试、移动端测试和真机验收项见 [贡献指南](CONTRIBUT
 
 上游项目和文档包括 [AstrBot](https://github.com/AstrBotDevs/AstrBot)、[AstrBot Desktop](https://github.com/AstrBotDevs/AstrBot-desktop)、[AstrBot 官方网站](https://astrbot.app/)、[官方最终用户许可协议](https://github.com/AstrBotDevs/AstrBot/blob/master/EULA.md)与[项目声明](https://github.com/AstrBotDevs/AstrBot/blob/master/FIRST_NOTICE.md)。本项目为独立开发的社区客户端。开发时核对的上游版本为 [AstrBot f37e158](https://github.com/AstrBotDevs/AstrBot/tree/f37e158dc1a5b5f2d90515a937e1c1aabde6b4ce)与 [AstrBot Desktop 32b0e69](https://github.com/AstrBotDevs/AstrBot-desktop/tree/32b0e693ca865276f8162bab9fdf7ecb08d11fa9)。
 
-项目采用 [AGPL-3.0-or-later](LICENSE) 开源许可。发布二进制时请同时提供完整的对应源代码和构建流程。另见[隐私说明](PRIVACY.md)及[第三方许可](THIRD_PARTY_NOTICES.md)。
+## 开源许可
+
+项目采用 [AGPL-3.0-or-later](LICENSE) 开源许可。分发二进制时请同时提供完整的对应源代码、构建流程、[许可证](LICENSE)和[第三方声明](THIRD_PARTY_NOTICES.md)。另见[隐私说明](PRIVACY.md)。

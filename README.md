@@ -34,10 +34,10 @@ The dashboard destination uses HTTP over SSH. The phone-to-SSH-server leg is enc
 
 ## Install a test build
 
-In your GitHub repository, open **Actions**, select **Android test APK** or **iOS unsigned IPA**, then select **Run workflow** on a branch containing the workflow. Download the artifact from the completed run.
+- **Android 7.0+ (API 24)** — For local testing on an ARM64 phone, install `astrbot-mobile-manager-0.1.0-arm64.apk` (about 19 MiB). The **Android test APK** workflow currently produces the larger universal `app-debug.apk`. Both use debug signing keys. To update an existing installation, use the same signing key and a compatible version code.
+- **iOS 15+** — The **iOS unsigned IPA** workflow is configured to produce `astrbot-mobile-unsigned.ipa` for signing with a tool such as SideStore or Sideloadly. You can also configure signing in Xcode and build the project for your device. Changing the signing team or bundle identifier can affect access to existing Keychain data.
 
-- **Android 7.0+ (API 24)** — Extract and install `app-debug.apk`. The APK is signed with a debug key. Updating over an existing installation requires the same signing key. GitHub runners may create a different key between runs.
-- **iOS 15+** — Extract `astrbot-mobile-unsigned.ipa` and sign it with SideStore, Sideloadly, or your own Xcode signing setup before installing. Personal Apple IDs can be used with compatible sideloading tools. App re-signing with a different bundle identifier or signing team can affect access to existing Keychain data.
+To run a build on GitHub, first make sure the workflow file exists on the repository's default branch. Open **Actions**, select the workflow, choose a branch under **Run workflow**, and download the artifact after the run completes.
 
 ## Build and test
 
@@ -47,10 +47,10 @@ Use Flutter **3.50.1** (Dart 3.14), JDK 21, Android SDK platforms 35 and 36, Bui
 flutter pub get --enforce-lockfile
 flutter analyze
 flutter test
-flutter build apk --debug
+flutter build apk --release --split-per-abi
 ```
 
-On macOS, Swift Package Manager resolves the iOS plugin dependencies as part of the Flutter build.
+The Android APKs are written to `build/app/outputs/flutter-apk/`. Use `app-arm64-v8a-release.apk` for an ARM64 phone. On macOS, Swift Package Manager resolves the iOS plugin dependencies as part of the Flutter build.
 
 ```sh
 flutter precache --ios
@@ -58,7 +58,11 @@ flutter build ios --release --no-codesign
 python3 tool/package_ipa.py build/ios/iphoneos/Runner.app build/astrbot-mobile-unsigned.ipa
 ```
 
-See [Contributing](CONTRIBUTING.md) for the SSH fixture, device test and manual acceptance checks.
+### Verification
+
+On Windows, `flutter analyze` and all 10 host tests passed with the SSH fixture enabled. Two Android emulator tests passed for secure storage and WebView session retention with a fixture page. The ARM64 Release APK passed signature verification. Sign-in, TOTP and file import/export against a real AstrBot instance are pending device verification. The iOS workflow and IPA packaging script are configured. macOS compilation and installation on an iPhone are pending.
+
+`flutter test` skips the SSH fixture by default. To include it, install Paramiko 5.1.0 and set `ASTRBOT_SSH_TEST=1` before running the tests. On a connected mobile device or emulator, run `flutter test integration_test/webui_test.dart -d <device-id>`.
 
 ## Scope and upstream
 
@@ -66,4 +70,6 @@ The MVP opens an HTTP WebUI served from a single AstrBot instance. Embedded top-
 
 The upstream projects and relevant documents are [AstrBot](https://github.com/AstrBotDevs/AstrBot), [AstrBot Desktop](https://github.com/AstrBotDevs/AstrBot-desktop), the [official site](https://astrbot.app/), the upstream [EULA](https://github.com/AstrBotDevs/AstrBot/blob/master/EULA.md) and [project notice](https://github.com/AstrBotDevs/AstrBot/blob/master/FIRST_NOTICE.md). This client is independent of AstrBotDevs. The upstream implementation was reviewed at [AstrBot f37e158](https://github.com/AstrBotDevs/AstrBot/tree/f37e158dc1a5b5f2d90515a937e1c1aabde6b4ce) and [AstrBot Desktop 32b0e69](https://github.com/AstrBotDevs/AstrBot-desktop/tree/32b0e693ca865276f8162bab9fdf7ecb08d11fa9).
 
-This project is free and open-source under [AGPL-3.0-or-later](LICENSE). Publish the complete corresponding source alongside any binary distribution. See [Privacy](PRIVACY.md) and [Third-party notices](THIRD_PARTY_NOTICES.md).
+## License
+
+This project is free and open-source under [AGPL-3.0-or-later](LICENSE). When distributing binaries, include the complete corresponding source, build instructions, [license](LICENSE), and [third-party notices](THIRD_PARTY_NOTICES.md). See the [privacy notice](PRIVACY.md).
