@@ -6,6 +6,10 @@ AstrBot Mobile Manager 是一个独立的非官方社区客户端，用于在 An
 
 手机直接连接服务器已有的 SSH 服务。AstrBot 管理端口无需对公网开放，也无需配置域名、HTTPS 反向代理、VPN 或额外部署服务。
 
+## 界面示例
+
+![AstrBot Mobile Manager 内打开的 AstrBot WebUI 首次提示](docs/screenshots/astrbot-webui-first-notice.png)
+
 ## 服务器要求
 
 - 手机必须能够访问服务器的 SSH 端口。SSH 账户必须允许向 WebUI 目标进行本地 TCP 转发。OpenSSH 用户可检查适用于该账户的 `AllowTcpForwarding` 和 `PermitOpen` 设置。

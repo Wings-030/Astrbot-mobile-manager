@@ -6,6 +6,10 @@ AstrBot Mobile Manager is an independent, unofficial Android and iOS client for 
 
 The phone connects over the SSH service you already have. Keep the WebUI port private. The app requires no domain, HTTPS reverse proxy, VPN, or additional server process.
 
+## Screenshot
+
+![AstrBot WebUI in AstrBot Mobile Manager with the first-run notice open](docs/screenshots/astrbot-webui-first-notice.png)
+
 ## Server requirements
 
 - The phone must be able to reach the server's SSH port. The SSH account must be allowed to open local TCP forwards to the WebUI destination. For OpenSSH, check `AllowTcpForwarding` and any `PermitOpen` restrictions that apply to the account.
